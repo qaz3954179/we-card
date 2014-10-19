@@ -4,9 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
-var webot = require('weixin-robot');
 var config = require('./conf')();
 
 var app = express();
@@ -20,13 +18,11 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-require('./rules')(webot);
-webot.watch(app, { token: config.token, path: '/we-card' });
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.query());
+
+require('./rules')(app);
 
 app.use('/', routes);
 //app.use('/we-card', wechat);
