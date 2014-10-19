@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/we-card', function(req, res) {
-	res.send(req.echostr);
+	res.send(req.query.echostr);
 	res.end();
 });
 
