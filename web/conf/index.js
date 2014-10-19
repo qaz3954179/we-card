@@ -1,4 +1,4 @@
-var Config = function() {
+﻿var Config = function() {
 	return {
 		appid: '',
 		secret: '',

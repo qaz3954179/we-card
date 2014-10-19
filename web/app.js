@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var wechat = require('./routes/wechat');
+var webot = require('weixin-robot');
+var config = require('./conf')();
 
 var app = express();
 
@@ -25,8 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.query());
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/we-card', wechat);
+//app.use('/we-card', wechat);
+require('./rules')(webot);
+webot.watch(app, { token: config.token, path: '/we-card' });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,7 +61,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-//module.exports = app;
-app.listen(3000, function() {
-    console.log('listen on 3000');
-});
+module.exports = app;
