@@ -4,8 +4,7 @@ var router = express.Router();
 var wechat = require('wechat');
 var config = require('../conf')();
 
-router.get('/', function(req, res) {
-	wechat(config.token, function(req, res, next) {
+router.post('/', wechat(config.token, function(req, res, next) {
 		console.info(req);
 		var message = req.weixin;
 		if (message.FromUserName === 'diaosi') {
@@ -16,7 +15,7 @@ router.get('/', function(req, res) {
 				type: 'text'
 			});
 		}
-	});
-});
+	})
+);
 
 module.exports = router;
