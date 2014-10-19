@@ -20,14 +20,17 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+require('./rules')(webot);
+webot.watch(app, { token: config.token, path: '/we-card' });
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.query());
 
 app.use('/', routes);
 //app.use('/we-card', wechat);
-require('./rules')(webot);
-webot.watch(app, { token: config.token, path: '/we-card' });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
